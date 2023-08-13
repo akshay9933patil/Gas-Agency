@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block service_request_title %}
+<title>Service Request</title>
+ {% endblock %}
+
+ {% block service_request %}
+
+<form method="post" class="jumbotron container mt-5">
+    <center><h1>Request Service</h1></center>
+    <br><br>
+    {% csrf_token %}
+
+    {{form|crispy}}
+
+    <br><br>
+    <input type="submit" value="Submit Request" class="btn btn-success col-5">
+    <input type="reset" value="Reset" class="btn btn-warning col-5 float-right">
+
+</form>
+
+ {% endblock %}

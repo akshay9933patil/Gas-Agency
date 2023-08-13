@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block register_customer_title %}
+<title>Register Customer</title>
+ {% endblock %}
+
+ {% block register_customer %}
+
+ <form method="post" class="container jumbotron mt-5">
+
+    <center><h1>Register</h1></center>
+    <br><br>
+    {% csrf_token %}
+
+    {{form|crispy}}
+
+    <br><br>
+    <input type="submit" value="Resgister" class="btn btn-outline-success col-5">
+    <input type="reset" value="Reset" class="btn btn-outline-warning float-right col-5">
+
+ </form>
+  {% endblock %}

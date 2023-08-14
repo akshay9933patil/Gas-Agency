@@ -14,7 +14,7 @@ class Customer(AbstractUser):
     objects = CustomerUserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
     
 
 class CustomerRepresentative(Customer):

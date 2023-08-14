@@ -1,11 +1,18 @@
-{% block content %}
-  <h2>Service Request Tracking</h2>
-  <table class="table table-dark text-light">
+{% extends 'base.html' %}
+
+{% block track_requests_title %}
+<title>Track Service Requests</title>
+ {% endblock %}
+
+{% block track_requests %}
+  <center><h2>Service Request Tracking</h2></center>
+  <table class="table table-dark text-light mt-5 text-center">
     <thead>
       <tr>
         <th>Service Request</th>
         <th>Status</th>
         <th>Date Submitted</th>
+        <th>Attached</th>
         {% if is_customer_representative %}
           <th>Actions</th>
         {% endif %}
@@ -17,9 +24,18 @@
           <td>{{ service_request }}</td>
           <td>{{ service_request.status }}</td>
           <td>{{ service_request.submission_timestamp }}</td>
+          <td>
+              {% if service_request.file_attachment %}
+                <a href="{{ service_request.file_attachment.url }}" target="_blank">
+                    {{ service_request.file_attachment.name }}
+                </a>
+              {% else %}
+                No Attachment
+              {% endif %}
+          </td>
           {% if is_customer_representative %}
             <td>
-              <a href="{% url 'update_request' service_request.pk %}">Update</a>
+              <a href="{% url 'update_request_url' service_request.id %}">Update</a>
               <a href="#">Delete</a>
             </td>
           {% endif %}

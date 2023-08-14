@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CustomerForm, CustomerRepresentativeForm, CustomerLoginForm, CustomerRepresentativeLoginForm
 from .models import CustomerRepresentative
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 
 
@@ -63,10 +63,15 @@ def customer_representative_login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponse('<h1> Logged in Successfully <h1>')
-                return redirect('home')  
+                # return HttpResponse('<h1> Logged in Successfully <h1>')
+                return redirect('request_tracking_url')  
             else:
                 pass
     else:
         form = CustomerRepresentativeLoginForm()
     return render(request, 'Auth/customer_login.html', {'form': form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('home_url')

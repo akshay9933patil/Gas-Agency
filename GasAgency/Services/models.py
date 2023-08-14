@@ -2,6 +2,11 @@ from django.db import models
 from Auth.models import Customer
 
 
+def user_directory_path(instance, filename):
+    
+    return f'service_requests/{instance.customer.username}/{filename}'
+
+
 class ServiceRequest(models.Model):
     SERVICE_TYPES = [
         ('Gas Leak Repair', 'Gas Leak Repair'),
@@ -12,7 +17,7 @@ class ServiceRequest(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='servicerequest')
     service_type = models.CharField(choices=SERVICE_TYPES, max_length=50)
     request_details = models.TextField()
-    file_attachment = models.FileField(upload_to='service_request_attachments/', null=True, blank=True)
+    file_attachment = models.FileField(upload_to=user_directory_path, null=True, blank=True)
     submission_timestamp = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, default='Pending')
 

@@ -10,4 +10,6 @@ urlpatterns = [
     path('request_tracking/', views.request_tracking, name='request_tracking_url'),
 
     path('update_request/<int:request_id>/', views.update_request, name='update_request_url'),
+    
+    path('home/', views.home_view, name='home_url'),
 ]

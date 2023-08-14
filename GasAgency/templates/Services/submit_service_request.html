@@ -8,7 +8,7 @@
 
  {% block service_request %}
 
-<form method="post" class="jumbotron container mt-5">
+<form method="post" class="jumbotron container mt-5" enctype="multipart/form-data">
     <center><h1>Request Service</h1></center>
     <br><br>
     {% csrf_token %}

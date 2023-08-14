@@ -9,6 +9,14 @@ class ServiceRequestForm(forms.ModelForm):
         
 
 class RequestUpdateForm(forms.ModelForm):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('In Progress', 'In Progress'),
+        ('Resolved', 'Resolved'),
+    ]
+
+    status = forms.ChoiceField(choices=STATUS_CHOICES, required=True)
+    update_details = forms.CharField(widget=forms.Textarea, required=True)
     class Meta:
         model = RequestUpdate
-        fields = ['update_details']
+        fields = ['status','update_details']

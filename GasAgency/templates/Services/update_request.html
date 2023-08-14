@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block service_request_update_title %}
+<title>Service Request</title>
+ {% endblock %}
+
+ {% block service_request_update %}
+
+<form method="post" class="jumbotron container mt-5" enctype="multipart/form-data">
+    <center><h1>Update Request Service</h1></center>
+    <br><br>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Submit Update</button>
+        
+</form>
+    <a href="{% url 'request_tracking_url' %}">Back to Request Tracking</a>
+
+ {% endblock %}

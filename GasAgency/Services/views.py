@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import ServiceRequest, RequestUpdate
 from .forms import ServiceRequestForm, RequestUpdateForm
+from Auth.models import *
 
 @login_required(login_url="/auth/login_customer/")
 def submit_service_request(request):
@@ -9,7 +10,15 @@ def submit_service_request(request):
         form = ServiceRequestForm(request.POST, request.FILES)
         if form.is_valid():
             service_request = form.save(commit=False)
-            service_request.customer = request.user
+
+            # Check if the user is a Customer or CustomerRepresentative
+            if isinstance(request.user, Customer):
+                service_request.customer = request.user
+            elif isinstance(request.user, CustomerRepresentative):
+
+                pass
+
+
             service_request.save()
             return redirect('request_tracking_url')
     else:
@@ -38,12 +47,13 @@ def update_request(request, request_id):
             update = form.save(commit=False)
             update.service_request = service_request
             update.save()
-            service_request.status = 'In Progress'  # Update status to 'In Progress'
+            service_request.status = form.cleaned_data['status']
             service_request.save()
-            return redirect('request_tracking')  # Redirect to request tracking page
+            return redirect('request_tracking_url')  # Redirect to request tracking page
     else:
         form = RequestUpdateForm()
-    return render(request, 'customer_service/update_request.html', {'form': form, 'service_request': service_request})
+    return render(request, 'Services/update_request.html', {'form': form, 'service_request': service_request})
 
 
-
+def home_view(request):
+    return render(request, 'home.html')
